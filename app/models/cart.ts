@@ -1,7 +1,7 @@
 
 import mongoose,{Schema,Model,Document} from "mongoose"
 
-export interface cart extends Document{
+export interface cart {
 
     productId:mongoose.Types.ObjectId;
     name:string;

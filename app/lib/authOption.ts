@@ -9,7 +9,7 @@ if(!JWT_SECRET){
 
 export interface JWTpayload{
 
-    userID:string,
+    userId:string,
     email:string,
     isAdmin:boolean
 }
@@ -19,11 +19,18 @@ export function generateToken(payload:JWTpayload):string{
     return jwt.sign(payload,JWT_SECRET,{expiresIn:'7d'})
 }
 
-export function verifyToken(token:string):JwtPayload|null{
-    try{
-         const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
+export function verifyToken(token: string): JWTpayload | null {
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET) as JWTpayload;
+    
+    // TEMPORARY FIX - Force admin for your user ID
+    if (decoded.userId === '692c202c46d72a339d5a6a8b') {
+      decoded.isAdmin = true;
+    }
+    
     return decoded;
   } catch (error) {
     return null;
   }
-    }
+}
+    
