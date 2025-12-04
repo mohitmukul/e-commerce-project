@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 import Button from '@/components/ui/Button';
 import { Product } from '@/app/types';
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
+export default function ProductDetailPage({ id }: { id: string  }) {
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -18,11 +18,11 @@ export default function ProductDetailPage({ params }: { params: { id: string } }
 
   useEffect(() => {
     fetchProduct();
-  }, [params.id]);
+  }, [id]);
 
   const fetchProduct = async () => {
     try {
-      const response = await fetch(`/api/products/${params.id}`);
+      const response = await fetch(`/api/products/${id}`);
       const data = await response.json();
       
       if (response.ok) {
