@@ -3,8 +3,8 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import connectDB from "@/app/lib/mongodb";
 import Products from "@/app/models/product";
-import next from "next";
-import { error } from "console";
+
+
 
 export async function GET(request:NextRequest) {
 

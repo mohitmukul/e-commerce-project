@@ -6,13 +6,14 @@ import Products from '@/app/models/product';
 import { error } from 'console';
 
 
-export async function GET(request:NextRequest,{params}:{params:{id:string}}) {
+export async function GET(request:NextRequest,{ params }: { params: Promise<{ id: string }> }) {
 
     try{
 
         await connectDB();
+         const { id } = await params;
 
-        const product = await Products.findById(params.id)
+        const product = await Products.findById(id)
 
         if(!product){
             return NextResponse.json(
@@ -39,7 +40,7 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}) {
     
 }
 
- export async function PUT(request:NextRequest,{params}:{params:{id:string}}) {
+ export async function PUT(request:NextRequest,{ params }: { params: Promise<{ id: string }> }) {
 
         try {   const session= await getServerSession(authOptions)
 
@@ -55,7 +56,9 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}) {
 
             const body= await request.json();
 
-            const product= await Products.findByIdAndUpdate(params.id,
+
+            const { id } = await params;
+            const product= await Products.findByIdAndUpdate(id,
                 body,
                 {new:true, runValidators:true}
             );
@@ -82,7 +85,7 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}) {
         
     }
 
-    export async function DELETE(request:NextRequest,{params}:{params:{id:string}}) {
+    export async function DELETE(request:NextRequest,{ params }: { params: Promise<{ id: string }> }) {
 
         try{
 
@@ -98,7 +101,9 @@ export async function GET(request:NextRequest,{params}:{params:{id:string}}) {
 
             await connectDB();
 
-            const product= await Products.findByIdAndDelete(params.id)
+            const { id } = await params;
+
+            const product= await Products.findByIdAndDelete(id)
 
             if(!product){
                 return NextResponse.json(
