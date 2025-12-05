@@ -169,3 +169,85 @@ export async function DELETE(request: NextRequest) {
     );
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions);
+    
+    if (!session) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
+    await connectDB();
+
+    const body = await request.json();
+    const { productId, quantity } = body;
+
+    if (!productId || quantity === undefined) {
+      return NextResponse.json(
+        { error: 'Product ID and quantity are required' },
+        { status: 400 }
+      );
+    }
+
+    const cart = await Cart.findOne({ userId: session.user.id });
+
+    if (!cart) {
+      return NextResponse.json(
+        { error: 'Cart not found' },
+        { status: 404 }
+      );
+    }
+
+    const itemIndex = cart.items.findIndex(
+      (item: any) => item.productId.toString() === productId
+    );
+
+    if (itemIndex === -1) {
+      return NextResponse.json(
+        { error: 'Item not found in cart' },
+        { status: 404 }
+      );
+    }
+
+    if (quantity === 0) {
+      // Remove item if quantity is 0
+      cart.items.splice(itemIndex, 1);
+    } else {
+      // Check stock
+      const product = await Products.findById(productId);
+      if (!product) {
+        return NextResponse.json(
+          { error: 'Product not found' },
+          { status: 404 }
+        );
+      }
+
+      if (quantity > product.stock) {
+        return NextResponse.json(
+          { error: 'Insufficient stock' },
+          { status: 400 }
+        );
+      }
+
+      // Update quantity
+      cart.items[itemIndex].quantity = quantity;
+    }
+
+    await cart.save();
+
+    return NextResponse.json(
+      { message: 'Cart updated', cart },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Update cart error:', error);
+    return NextResponse.json(
+      { error: 'Failed to update cart' },
+      { status: 500 }
+    );
+  }
+}

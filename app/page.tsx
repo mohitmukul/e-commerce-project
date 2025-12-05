@@ -3,12 +3,12 @@ import Button from '@/components/ui/Button';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-red-100 to-orange-50">
+    
+      <nav className="bg-red-200 shadow-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold text-red-400">
               ShopHub
             </Link>
             <div className="flex items-center gap-4">
@@ -26,7 +26,7 @@ export default function HomePage() {
       <div className="container mx-auto px-4 py-20">
 <div className="text-center max-w-4xl mx-auto">
 <h1 className="text-6xl font-bold text-gray-900 mb-6">
-Welcome to <span className="text-blue-600">ShopHub</span>
+Welcome to <span className="text-FDACAC">ShopHub</span>
 </h1>
 <p className="text-2xl text-gray-600 mb-12">
 Your one-stop destination for all your shopping needs
@@ -46,17 +46,17 @@ Your one-stop destination for all your shopping needs
 
       
       <div className="grid md:grid-cols-3 gap-8 mt-20">
-        <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="bg-red-200 p-8 rounded-lg shadow-md">
           <div className="text-5xl mb-4">🚚</div>
           <h3 className="text-xl font-bold mb-2">Free Shipping</h3>
           <p className="text-gray-600">On all orders above ₹500</p>
         </div>
-        <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="bg-red-200 p-8 rounded-lg shadow-md">
           <div className="text-5xl mb-4">💳</div>
           <h3 className="text-xl font-bold mb-2">Secure Payments</h3>
           <p className="text-gray-600">100% secure transactions</p>
         </div>
-        <div className="bg-white p-8 rounded-lg shadow-md">
+        <div className="bg-red-200 p-8 rounded-lg shadow-md">
           <div className="text-5xl mb-4">🎁</div>
           <h3 className="text-xl font-bold mb-2">Easy Returns</h3>
           <p className="text-gray-600">30-day return policy</p>

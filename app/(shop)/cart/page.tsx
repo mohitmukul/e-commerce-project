@@ -110,12 +110,12 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md sticky top-0 z-50">
+    <div className="min-h-screen bg-red-100">
+      
+      <nav className="bg-red-200 shadow-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold text-red-800">
               ShopHub
             </Link>
             <div className="flex items-center gap-4">
@@ -130,15 +130,15 @@ export default function CartPage() {
         </div>
       </nav>
 
-      {/* Cart Content */}
+      
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
+        <h1 className="text-3xl text-red-800 font-bold mb-8">Shopping Cart</h1>
 
         {!cart || cart.items.length === 0 ? (
           <Card className="p-8 text-center">
             <div className="text-6xl mb-4">🛒</div>
             <h2 className="text-2xl font-semibold mb-4">Your cart is empty</h2>
-            <p className="text-gray-600 mb-6">Add some products to get started!</p>
+            <p className="text-red-800 mb-6">Add some products to get started!</p>
             <Link href="/products">
               <Button>Browse Products</Button>
             </Link>
@@ -164,14 +164,14 @@ export default function CartPage() {
                       </div>
                     </Link>
 
-                    {/* Product Info */}
+                    
                     <div className="flex-1">
                       <Link href={`/products/${item.productId}`}>
-                        <h3 className="font-semibold text-lg hover:text-blue-600">
+                        <h3 className="font-semibold text-lg text-red-800 hover:text-red-900">
                           {item.name}
                         </h3>
                       </Link>
-                      <p className="text-blue-600 font-bold text-xl mt-2">
+                      <p className="text-red-800 font-bold text-xl mt-2">
                         ₹{item.price.toLocaleString()}
                       </p>
 
@@ -198,7 +198,7 @@ export default function CartPage() {
 
                         <button
                           onClick={() => removeItem(item.productId)}
-                          className="text-red-600 hover:text-red-700 font-medium ml-auto"
+                          className="text-red-800 hover:text-red-900 font-medium ml-auto"
                         >
                           Remove
                         </button>
@@ -207,8 +207,8 @@ export default function CartPage() {
 
                     {/* Item Total */}
                     <div className="text-right">
-                      <p className="text-gray-600 text-sm">Subtotal</p>
-                      <p className="font-bold text-lg">
+                      <p className="text-red-900 text-sm">Subtotal</p>
+                      <p className="font-bold text-red-900 text-lg">
                         ₹{(item.price * item.quantity).toLocaleString()}
                       </p>
                     </div>
@@ -230,13 +230,13 @@ export default function CartPage() {
                 
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Items ({cart.items.length})</span>
+                    <span className="text-red-900">Items ({cart.items.length})</span>
                     <span className="font-semibold">
                       ₹{cart.totalPrice.toLocaleString()}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Shipping</span>
+                    <span className="text-red-900">Shipping</span>
                     <span className="font-semibold text-green-600">FREE</span>
                   </div>
                   <div className="border-t pt-3 flex justify-between text-lg">

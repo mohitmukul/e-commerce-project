@@ -1,14 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import toast from 'react-hot-toast';
 import Button from '@/components/ui/Button';
 import { Product } from '@/app/types';
 
-export default function ProductDetailPage({ id }: { id: string  }) {
+export default function ProductDetailPage() {
+  const params = useParams();
+  const productId = params?.id as string;
+  
   const [product, setProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
@@ -17,23 +20,32 @@ export default function ProductDetailPage({ id }: { id: string  }) {
   const router = useRouter();
 
   useEffect(() => {
-    fetchProduct();
-  }, [id]);
+    if (productId) {
+      fetchProduct();
+    }
+  }, [productId]);
 
   const fetchProduct = async () => {
     try {
-      const response = await fetch(`/api/products/${id}`);
-      const data = await response.json();
+      console.log(' Fetching product ID:', productId);
+      const response = await fetch(`/api/products/${productId}`);
+      console.log(' Response status:', response.status);
       
-      if (response.ok) {
+      const data = await response.json();
+      console.log(' Response data:', data);
+
+      if (response.ok && data.product) {
         setProduct(data.product);
+        console.log(' Product loaded successfully!');
       } else {
+        console.error(' Product not found in response');
         toast.error('Product not found');
-        router.push('/products');
+        setTimeout(() => router.push('/products'), 2000);
       }
     } catch (error) {
-      console.error('Error fetching product:', error);
+      console.error(' Error fetching product:', error);
       toast.error('Failed to load product');
+      setTimeout(() => router.push('/products'), 2000);
     } finally {
       setIsLoading(false);
     }
@@ -75,10 +87,10 @@ export default function ProductDetailPage({ id }: { id: string  }) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-red-100">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-xl">Loading product...</p>
+          <p className="text-xl text-gray-600">Loading product...</p>
         </div>
       </div>
     );
@@ -86,11 +98,14 @@ export default function ProductDetailPage({ id }: { id: string  }) {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-red-200">
         <div className="text-center">
-          <p className="text-xl text-gray-600 mb-4">Product not found</p>
+          <div className="text-6xl mb-4">😕</div>
+          <p className="text-2xl text-gray-600 mb-4 font-semibold">Product not found</p>
+          <p className="text-gray-500 mb-2">Product ID: {productId}</p>
+          <p className="text-gray-500 mb-6">The product you're looking for doesn't exist</p>
           <Link href="/products">
-            <Button>Back to Products</Button>
+            <Button className="px-8 py-3">← Back to Products</Button>
           </Link>
         </div>
       </div>
@@ -98,32 +113,41 @@ export default function ProductDetailPage({ id }: { id: string  }) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Navbar */}
-      <nav className="bg-white shadow-md sticky top-0 z-50">
+    <div className="min-h-screen bg-red-200">
+
+      <nav className="bg-red-200 shadow-md sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold text-red-400">
               ShopHub
             </Link>
             <div className="flex items-center gap-4">
               <Link href="/products">
-                <Button variant="secondary">← Back</Button>
+                <Button variant="secondary">← Back to Products</Button>
               </Link>
               <Link href="/cart">
                 <Button variant="secondary">🛒 Cart</Button>
               </Link>
+              {session ? (
+                <Link href="/profile">
+                  <Button variant="secondary">👤 Profile</Button>
+                </Link>
+              ) : (
+                <Link href="/login">
+                  <Button variant="primary">Login</Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
       </nav>
 
-      {/* Product Detail */}
+    
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="bg-red-100 rounded-lg shadow-lg overflow-hidden">
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Product Image */}
-            <div className="aspect-square bg-gray-200">
+            
+            <div className="aspect-square bg-red-100">
               <img
                 src={product.image}
                 alt={product.name}
@@ -134,78 +158,88 @@ export default function ProductDetailPage({ id }: { id: string  }) {
               />
             </div>
 
-            {/* Product Info */}
+            
             <div className="p-8">
               <div className="mb-4">
-                <span className="inline-block px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+                <span className="inline-block px-4 py-2 bg-red-200 text-red-400 rounded-full text-sm font-bold">
                   {product.category}
                 </span>
               </div>
 
-              <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
+              <h1 className="text-4xl font-bold mb-4 text-gray-900">{product.name}</h1>
 
               <div className="mb-6">
-                <span className="text-4xl font-bold text-blue-600">
+                <span className="text-5xl font-bold text-red-400">
                   ₹{product.price.toLocaleString()}
                 </span>
               </div>
 
-              <div className="mb-6">
-                <h2 className="font-semibold text-lg mb-2">Description</h2>
-                <p className="text-gray-600 leading-relaxed">{product.description}</p>
+              <div className="mb-6 bg-red-100 p-4 rounded-lg">
+                <h2 className="font-bold text-lg mb-2 text-gray-900">Description</h2>
+                <p className="text-gray-700 leading-relaxed">{product.description}</p>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-6 bg-red-100 p-4 rounded-lg">
                 <div className="flex items-center gap-4">
-                  <span className="font-semibold">Availability:</span>
-                  <span className={`px-3 py-1 rounded ${
+                  <span className="font-bold text-gray-900">Availability:</span>
+                  <span className={`px-4 py-2 rounded-lg font-bold ${
                     product.stock > 0 
                       ? 'bg-green-100 text-green-800' 
                       : 'bg-red-100 text-red-800'
                   }`}>
-                    {product.stock > 0 ? `${product.stock} in stock` : 'Out of stock'}
+                    {product.stock > 0 ? `✅ ${product.stock} in stock` : '❌ Out of stock'}
                   </span>
                 </div>
               </div>
 
               {product.stock > 0 && (
                 <>
-                  {/* Quantity Selector */}
-                  <div className="mb-6">
-                    <label className="block font-semibold mb-2">Quantity:</label>
+            
+                  <div className="mb-6 bg-red-100 p-4 rounded-lg">
+                    <label className="block font-bold mb-3 text-gray-900">Quantity:</label>
                     <div className="flex items-center gap-4">
                       <button
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="w-10 h-10 rounded-lg bg-gray-200 hover:bg-gray-300 font-bold"
+                        className="w-12 h-12 rounded-lg bg-red-300 hover:bg-red-400 font-bold text-xl transition-colors"
                       >
                         -
                       </button>
-                      <span className="text-xl font-semibold w-12 text-center">
+                      <span className="text-2xl font-bold w-16 text-center text-gray-900">
                         {quantity}
                       </span>
                       <button
                         onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
-                        className="w-10 h-10 rounded-lg bg-gray-200 hover:bg-gray-300 font-bold"
+                        className="w-12 h-12 rounded-lg bg-red-300 hover:bg-red-400 font-bold text-xl transition-colors"
                       >
                         +
                       </button>
+                      <span className="text-gray-600 ml-4">
+                        (Max: {product.stock})
+                      </span>
                     </div>
                   </div>
 
-                  {/* Add to Cart Button */}
+          
                   <Button
                     onClick={handleAddToCart}
                     disabled={isAddingToCart}
-                    className="w-full text-lg py-3"
+                    className="w-full text-xl py-4 font-bold"
                   >
-                    {isAddingToCart ? 'Adding to Cart...' : '🛒 Add to Cart'}
+                    {isAddingToCart ? '⏳ Adding to Cart...' : '🛒 Add to Cart'}
                   </Button>
+
+                  {!session && (
+                    <p className="text-center text-sm text-gray-600 mt-3">
+                      Please <Link href="/login" className="text-red-300 underline font-semibold">login</Link> to add items to cart
+                    </p>
+                  )}
                 </>
               )}
 
               {product.stock === 0 && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
-                  <p className="text-red-800 font-semibold">This product is currently out of stock</p>
+                <div className="bg-red-50 border-2 border-red-300 rounded-lg p-6 text-center">
+                  <p className="text-red-800 font-bold text-lg">⚠️ This product is currently out of stock</p>
+                  <p className="text-red-600 mt-2">Check back later for availability</p>
                 </div>
               )}
             </div>

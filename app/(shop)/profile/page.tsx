@@ -34,12 +34,12 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-red-100">
       {/* Navbar */}
-      <nav className="bg-white shadow-md">
+      <nav className="bg-red-200 shadow-md">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold text-red-800">
               ShopHub
             </Link>
             <div className="flex items-center gap-4">
@@ -56,20 +56,20 @@ export default function ProfilePage() {
 
       {/* Profile Content */}
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">My Profile</h1>
+        <h1 className="text-3xl text-white font-bold mb-8">My Profile</h1>
 
         <div className="max-w-2xl mx-auto space-y-6">
           {/* User Info Card */}
           <Card className="p-6">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+              <div className="w-20 h-20 bg-red-800 rounded-full flex items-center justify-center text-white text-3xl font-bold">
                 {session?.user?.name?.charAt(0).toUpperCase()}
               </div>
               <div>
-                <h2 className="text-2xl font-bold">{session?.user?.name}</h2>
-                <p className="text-gray-600">{session?.user?.email}</p>
+                <h2 className="text-2xl text-red-900 font-bold">{session?.user?.name}</h2>
+                <p className="text-red-800">{session?.user?.email}</p>
                 {session?.user?.isAdmin && (
-                  <span className="inline-block mt-2 px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium">
+                  <span className="inline-block mt-2 px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium">
                     Admin
                   </span>
                 )}
@@ -78,16 +78,16 @@ export default function ProfilePage() {
 
             <div className="space-y-3">
               <div className="flex justify-between py-3 border-b">
-                <span className="text-gray-600">Name</span>
-                <span className="font-semibold">{session?.user?.name}</span>
+                <span className="text-red-800">Name</span>
+                <span className="font-semibold text-gray-700">{session?.user?.name}</span>
               </div>
               <div className="flex justify-between py-3 border-b">
-                <span className="text-gray-600">Email</span>
-                <span className="font-semibold">{session?.user?.email}</span>
+                <span className="text-red-800">Email</span>
+                <span className="font-semibold text-gray-700">{session?.user?.email}</span>
               </div>
               <div className="flex justify-between py-3 border-b">
-                <span className="text-gray-600">Account Type</span>
-                <span className="font-semibold">
+                <span className="text-red-800">Account Type</span>
+                <span className="font-semibold text-gray-700">
                   {session?.user?.isAdmin ? 'Admin' : 'Customer'}
                 </span>
               </div>
@@ -96,9 +96,9 @@ export default function ProfilePage() {
 
           {/* Admin Panel Link */}
           {session?.user?.isAdmin && (
-            <Card className="p-6 bg-purple-50 border-purple-200">
-              <h3 className="font-bold text-lg mb-2">Admin Access</h3>
-              <p className="text-gray-600 mb-4">
+            <Card className="p-6 bg-red-100 border-red-200">
+              <h3 className="font-bold text-white text-lg mb-2">Admin Access</h3>
+              <p className="text-red-800 mb-4">
                 You have admin privileges. Manage products and orders from the admin panel.
               </p>
               <Link href="/admin/dashboard">
@@ -109,15 +109,15 @@ export default function ProfilePage() {
 
           {/* Quick Links */}
           <Card className="p-6">
-            <h3 className="font-bold text-lg mb-4">Quick Links</h3>
+            <h3 className="font-bold text-lg mb-4 text-red-800">Quick Links</h3>
             <div className="space-y-2">
               <Link href="/cart">
-                <button className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <button className="w-full text-left text-red-800 px-4 py-3 hover:bg-red-100 rounded-lg transition-colors">
                   🛒 View Cart
                 </button>
               </Link>
               <Link href="/products">
-                <button className="w-full text-left px-4 py-3 hover:bg-gray-100 rounded-lg transition-colors">
+                <button className="w-full text-left px-4 py-3 text-red-800 hover:bg-red-100 rounded-lg transition-colors">
                   🛍️ Browse Products
                 </button>
               </Link>

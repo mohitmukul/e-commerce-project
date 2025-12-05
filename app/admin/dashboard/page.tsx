@@ -64,19 +64,19 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Admin Navbar */}
-      <nav className="bg-purple-700 text-white shadow-lg">
+    <div className="min-h-screen bg-red-100">
+      
+      <nav className="bg-red-300 text-white shadow-lg">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
-              <Link href="/admin/dashboard" className="text-2xl font-bold">
+              <Link href="/admin/dashboard" className="text-2xl text-red-800 font-bold">
                 🛡️ Admin Panel
               </Link>
-              <Link href="/admin/products" className="hover:text-purple-200">
+              <Link href="/admin/products" className="hover:text-red-800">
                 Products
               </Link>
-              <Link href="/admin/products/new" className="hover:text-purple-200">
+              <Link href="/admin/products/new" className="hover:text-red-800">
                 Add Product
               </Link>
             </div>
@@ -94,35 +94,35 @@ export default function AdminDashboard() {
 
       {/* Dashboard Content */}
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+        <h1 className="text-3xl text-white font-bold mb-8">Dashboard</h1>
 
         {/* Stats Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          <Card className="p-6 bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+          <Card className="p-6 bg-gradient-to-br from-red-200 to-blue-300 text-white">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 mb-1">Total Products</p>
-                <p className="text-4xl font-bold">{stats.totalProducts}</p>
+                <p className="text-white mb-1">Total Products</p>
+                <p className="text-4xl text-red-800 font-bold">{stats.totalProducts}</p>
               </div>
               <div className="text-6xl opacity-50">📦</div>
             </div>
           </Card>
 
-          <Card className="p-6 bg-gradient-to-br from-orange-500 to-orange-600 text-white">
+          <Card className="p-6 bg-gradient-to-br from-red-200 to-orange-300 text-white">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-100 mb-1">Low Stock Items</p>
+                <p className="text-red-500 mb-1">Low Stock Items</p>
                 <p className="text-4xl font-bold">{stats.lowStock}</p>
               </div>
               <div className="text-6xl opacity-50">⚠️</div>
             </div>
           </Card>
 
-          <Card className="p-6 bg-gradient-to-br from-green-500 to-green-600 text-white">
+          <Card className="p-6 bg-gradient-to-br from-red-300 to-red-400 text-white">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-green-100 mb-1">Categories</p>
-                <p className="text-4xl font-bold">{stats.categories}</p>
+                <p className="text-red-800 mb-1">Categories</p>
+                <p className="text-4xl text-white font-bold">{stats.categories}</p>
               </div>
               <div className="text-6xl opacity-50">📑</div>
             </div>
@@ -131,21 +131,21 @@ export default function AdminDashboard() {
 
         {/* Quick Actions */}
         <Card className="p-6 mb-8">
-          <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
+          <h2 className="text-xl text-white font-bold mb-4">Quick Actions</h2>
           <div className="grid md:grid-cols-2 gap-4">
             <Link href="/admin/products/new">
-              <button className="w-full p-6 bg-blue-50 hover:bg-blue-100 rounded-lg text-left transition-colors border-2 border-blue-200">
+              <button className="w-full p-6 bg-red-100 hover:bg-red-300 rounded-lg text-left transition-colors border-2 border-blue-200">
                 <div className="text-3xl mb-2">➕</div>
-                <h3 className="font-bold text-lg mb-1">Add New Product</h3>
-                <p className="text-gray-600 text-sm">Create a new product listing</p>
+                <h3 className="font-bold text-white text-lg mb-1">Add New Product</h3>
+                <p className="text-red-800 text-sm">Create a new product listing</p>
               </button>
             </Link>
 
             <Link href="/admin/products">
-              <button className="w-full p-6 bg-purple-50 hover:bg-purple-100 rounded-lg text-left transition-colors border-2 border-purple-200">
+              <button className="w-full p-6 bg-red-100 hover:bg-red-200 rounded-lg text-left transition-colors border-2 border-purple-200">
                 <div className="text-3xl mb-2">✏️</div>
                 <h3 className="font-bold text-lg mb-1">Manage Products</h3>
-                <p className="text-gray-600 text-sm">Edit or delete existing products</p>
+                <p className="text-red-800 text-sm">Edit or delete existing products</p>
               </button>
             </Link>
           </div>
@@ -155,18 +155,18 @@ export default function AdminDashboard() {
         <Card className="p-6">
           <h2 className="text-xl font-bold mb-4">Admin Info</h2>
           <div className="space-y-3">
-            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+            <div className="flex items-center gap-3 p-3 bg-red-100 rounded-lg">
               <span className="text-2xl">👤</span>
               <div>
                 <p className="font-semibold">{session?.user?.name}</p>
-                <p className="text-sm text-gray-600">{session?.user?.email}</p>
+                <p className="text-sm text-red-800">{session?.user?.email}</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
+            <div className="flex items-center gap-3 p-3 bg-red-100 rounded-lg">
               <span className="text-2xl">🛡️</span>
               <div>
                 <p className="font-semibold">Admin Access Level</p>
-                <p className="text-sm text-gray-600">Full access to all features</p>
+                <p className="text-sm text-red-800">Full access to all features</p>
               </div>
             </div>
           </div>
